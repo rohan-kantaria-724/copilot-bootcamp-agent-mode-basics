@@ -29,7 +29,7 @@ function App() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!newItem.trim()) return;
 
@@ -55,7 +55,7 @@ function App() {
     }
   };
 
-  const handleDelete = async (itemId) => {
+  const handleDelete = async itemId => {
     try {
       const response = await fetch(`/api/items/${itemId}`, {
         method: 'DELETE',
@@ -75,38 +75,38 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <h1>Hello World</h1>
         <p>Connected to in-memory database</p>
       </header>
-      
+
       <main>
-        <section className="add-item-section">
+        <section className='add-item-section'>
           <h2>Add New Item</h2>
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type='text'
               value={newItem}
-              onChange={(e) => setNewItem(e.target.value)}
-              placeholder="Enter item name"
+              onChange={e => setNewItem(e.target.value)}
+              placeholder='Enter item name'
             />
-            <button type="submit">Add Item</button>
+            <button type='submit'>Add Item</button>
           </form>
         </section>
 
-        <section className="items-section">
+        <section className='items-section'>
           <h2>Items from Database</h2>
           {loading && <p>Loading data...</p>}
-          {error && <p className="error">{error}</p>}
+          {error && <p className='error'>{error}</p>}
           {!loading && !error && (
             <ul>
               {data.length > 0 ? (
-                data.map((item) => (
-                  <li key={item.id} className="item-row">
-                    <span className="item-name">{item.name}</span>
-                    <button 
-                      className="delete-btn"
+                data.map(item => (
+                  <li key={item.id} className='item-row'>
+                    <span className='item-name'>{item.name}</span>
+                    <button
+                      className='delete-btn'
                       onClick={() => handleDelete(item.id)}
                       aria-label={`Delete ${item.name}`}
                     >

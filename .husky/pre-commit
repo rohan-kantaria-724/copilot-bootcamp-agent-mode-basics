@@ -1,0 +1,21 @@
+#!/bin/sh
+# Pre-commit hook to run linting and formatting checks
+
+echo "Running pre-commit checks..."
+
+# Check if prettier is happy with all files
+npm run format:check
+if [ $? -ne 0 ]; then
+  echo "❌ Prettier check failed. Please run 'npm run format' to fix formatting issues."
+  exit 1
+fi
+
+# Run ESLint on all files
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ ESLint check failed. Please fix linting issues or run 'npm run lint:fix' for auto-fixable issues."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
+exit 0
