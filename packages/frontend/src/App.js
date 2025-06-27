@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newItem, setNewItem] = useState('');
+  const [newItem, setNewItem] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -14,99 +14,99 @@ function App() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/items');
+      const response = await fetch("/api/items");
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const result = await response.json();
       setData(result);
       setError(null);
     } catch (err) {
-      setError('Failed to fetch data: ' + err.message);
-      console.error('Error fetching data:', err);
+      setError("Failed to fetch data: " + err.message);
+      console.error("Error fetching data:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newItem.trim()) return;
 
     try {
-      const response = await fetch('/api/items', {
-        method: 'POST',
+      const response = await fetch("/api/items", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ name: newItem }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add item');
+        throw new Error("Failed to add item");
       }
 
       const result = await response.json();
       setData([...data, result]);
-      setNewItem('');
+      setNewItem("");
     } catch (err) {
-      setError('Error adding item: ' + err.message);
-      console.error('Error adding item:', err);
+      setError("Error adding item: " + err.message);
+      console.error("Error adding item:", err);
     }
   };
 
-  const handleDelete = async itemId => {
+  const handleDelete = async (itemId) => {
     try {
       const response = await fetch(`/api/items/${itemId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete item');
+        throw new Error("Failed to delete item");
       }
 
       // Remove the item from the local state
-      setData(data.filter(item => item.id !== itemId));
+      setData(data.filter((item) => item.id !== itemId));
       setError(null);
     } catch (err) {
-      setError('Error deleting item: ' + err.message);
-      console.error('Error deleting item:', err);
+      setError("Error deleting item: " + err.message);
+      console.error("Error deleting item:", err);
     }
   };
 
   return (
-    <div className='App'>
-      <header className='App-header'>
+    <div className="App">
+      <header className="App-header">
         <h1>Hello World</h1>
         <p>Connected to in-memory database</p>
       </header>
 
       <main>
-        <section className='add-item-section'>
+        <section className="add-item-section">
           <h2>Add New Item</h2>
           <form onSubmit={handleSubmit}>
             <input
-              type='text'
+              type="text"
               value={newItem}
-              onChange={e => setNewItem(e.target.value)}
-              placeholder='Enter item name'
+              onChange={(e) => setNewItem(e.target.value)}
+              placeholder="Enter item name"
             />
-            <button type='submit'>Add Item</button>
+            <button type="submit">Add Item</button>
           </form>
         </section>
 
-        <section className='items-section'>
+        <section className="items-section">
           <h2>Items from Database</h2>
           {loading && <p>Loading data...</p>}
-          {error && <p className='error'>{error}</p>}
+          {error && <p className="error">{error}</p>}
           {!loading && !error && (
             <ul>
               {data.length > 0 ? (
-                data.map(item => (
-                  <li key={item.id} className='item-row'>
-                    <span className='item-name'>{item.name}</span>
+                data.map((item) => (
+                  <li key={item.id} className="item-row">
+                    <span className="item-name">{item.name}</span>
                     <button
-                      className='delete-btn'
+                      className="delete-btn"
                       onClick={() => handleDelete(item.id)}
                       aria-label={`Delete ${item.name}`}
                     >
