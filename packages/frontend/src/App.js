@@ -1,5 +1,41 @@
 import React, { useState, useEffect } from "react";
+
+// MUI component imports (alphabetical order)
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  CssBaseline,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+// MUI icons
+import { Delete as DeleteIcon } from '@mui/icons-material';
+
 import "./App.css";
+
+// Create MUI theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
 function App() {
   const [data, setData] = useState([]);
@@ -75,67 +111,105 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello World</h1>
-        <p>Connected to in-memory database</p>
-      </header>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="md" sx={{ py: 3 }}>
+        <Paper elevation={3} sx={{ p: 3, mb: 3, bgcolor: 'primary.main', color: 'white' }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Hello World
+          </Typography>
+          <Typography variant="body1">
+            Connected to in-memory database
+          </Typography>
+        </Paper>
 
-      <main>
-        <section className="add-item-section">
-          <h2>Add New Item</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
+        <Box component="main" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
+          <Typography variant="h6" component="h2" gutterBottom>
+            Add New Item
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2 }}>
+            <TextField
+              fullWidth
+              label="Item Name"
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
               placeholder="Enter item name"
+              variant="outlined"
+              size="small"
             />
-            <button type="submit">Add Item</button>
-          </form>
-        </section>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ minWidth: 120 }}
+            >
+              Add Item
+            </Button>
+          </Box>
+        </Paper>
 
-        <section className="items-section">
-          <h2>Items from Database</h2>
-          {loading && <p>Loading data...</p>}
-          {error && <p className="error">{error}</p>}
-          {!loading && !error && (
-            <div className="table-container">
-              {data.length > 0 ? (
-                <table className="items-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((item) => (
-                      <tr key={item.id} className="item-row">
-                        <td className="item-id">{item.id}</td>
-                        <td className="item-name">{item.name}</td>
-                        <td className="item-actions">
-                          <button
-                            className="delete-btn"
-                            onClick={() => handleDelete(item.id)}
-                            aria-label={`Delete ${item.name}`}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>No items found. Add some!</p>
-              )}
-            </div>
+        <Paper elevation={2} sx={{ p: 2 }}>
+          <Typography variant="h6" component="h2" gutterBottom>
+            Items from Database
+          </Typography>
+          {loading && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+              <CircularProgress />
+            </Box>
           )}
-        </section>
-      </main>
-    </div>
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+          {!loading && !error && (
+            <Box>
+              {data.length > 0 ? (
+                <TableContainer>
+                  <Table sx={{ minWidth: 650 }} aria-label="items table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell component="th" scope="col">ID</TableCell>
+                        <TableCell component="th" scope="col">Name</TableCell>
+                        <TableCell component="th" scope="col" align="center">Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data.map((item) => (
+                        <TableRow key={item.id} hover>
+                          <TableCell component="th" scope="row">
+                            {item.id}
+                          </TableCell>
+                          <TableCell>{item.name}</TableCell>
+                          <TableCell align="center">
+                            <Button
+                              variant="contained"
+                              color="error"
+                              size="small"
+                              startIcon={<DeleteIcon />}
+                              onClick={() => handleDelete(item.id)}
+                              aria-label={`Delete ${item.name}`}
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <Typography variant="body1" sx={{ textAlign: 'center', p: 2 }}>
+                  No items found. Add some!
+                </Typography>
+              )}
+            </Box>
+          )}
+        </Paper>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 
