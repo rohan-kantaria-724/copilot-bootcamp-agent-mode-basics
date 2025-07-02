@@ -12,11 +12,15 @@ The project documentation is organized into the following files:
 - [General Guidelines](../docs/general-guidelines.md) - Basic principles for all code in the project
 - [Code Style](../docs/code-style.md) - Coding style conventions including imports, syntax, and formatting
 - [Testing Practices](../docs/testing-practices.md) - Guidelines for writing and running tests
+- [MUI Guidelines](../docs/mui-guidelines.md) - Material-UI component usage and best practices
 
 ## Key Principles
 
 - Follow existing patterns and coding style in the project
+- Use Material-UI (MUI) components instead of custom HTML elements when possible
+- Follow MUI guidelines for component usage, styling, and accessibility
 - Ensure proper error handling is implemented
 - Include comprehensive JSDoc comments for all functions and methods
-- Follow the import organization guidelines
+- Follow the import organization guidelines (including MUI import patterns)
 - Adhere to the testing practices for new functionality
+- Use MUI's sx prop and theme system for styling instead of custom CSS when practical

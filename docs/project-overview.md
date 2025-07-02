@@ -17,7 +17,8 @@ The project follows a monorepo architecture with the following structure:
 
 - React
 - React DOM
-- CSS for styling
+- Material-UI (MUI) for component library and styling
+- CSS for custom styling
 - Jest for testing
 
 ### Backend
