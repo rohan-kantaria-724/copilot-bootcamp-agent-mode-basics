@@ -58,42 +58,62 @@ button:hover {
   background-color: #21a1c9;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-li:last-child {
-  border-bottom: none;
-}
-
 .error {
   color: #d32f2f;
   font-weight: bold;
 }
 
-.item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+/* Table styles */
+.table-container {
+  overflow-x: auto;
 }
 
-.item-row:last-child {
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.items-table th {
+  background-color: #282c34;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #61dafb;
+}
+
+.items-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.items-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.items-table tr:last-child td {
   border-bottom: none;
 }
 
+.item-id {
+  font-family: monospace;
+  color: #666;
+  width: 80px;
+}
+
 .item-name {
-  flex: 1;
-  text-align: left;
   font-size: 1rem;
+  font-weight: 500;
+}
+
+.item-actions {
+  text-align: center;
+  width: 120px;
 }
 
 .delete-btn {
